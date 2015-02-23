@@ -1,0 +1,30 @@
+#!/bin/sh
+
+exec_args=
+for arg in "$@" ; do
+   exec_args=$exec_args" "$arg;
+done
+
+#获取运行目录
+EXEC_DIR=`pwd`
+
+#获取安装目录
+PRGDIR="`dirname $0`"
+cd "$PRGDIR"
+ADS_HOME="`pwd`"
+
+#切换回运行目录
+cd "$EXEC_DIR"
+
+CLASSES=$ADS_HOME/lib/ads.jar
+CLASSES=$ADS_HOME/lib/commons-lang.jar:$CLASSES
+CLASSES=$ADS_HOME/lib/commons-io.jar:$CLASSES
+CLASSES=$ADS_HOME/lib/slf4j-api.jar:$CLASSES
+CLASSES=$ADS_HOME/lib/slf4j-log4j12.jar:$CLASSES
+CLASSES=$ADS_HOME/lib/log4j.jar:$CLASSES
+CLASSES=$ADS_HOME/lib/xpp3_min.jar:$CLASSES
+CLASSES=$ADS_HOME/lib/xstream.jar:$CLASSES
+CLASSES=$ADS_HOME/lib/commons-cli.jar:$CLASSES
+CLASSES=$ADS_HOME:$EXEC_DIR:$CLASSES
+
+java -cp $CLASSES com.ffcs.ads.Main $exec_args & 

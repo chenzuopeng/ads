@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.ffcs.com.cn/ads" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="deploy">
+		<xs:complexType>
+			<xs:attribute name="basedir" type="xs:string" />
+			<xs:all>
+				<xs:element name="copy" type="copytype" maxOccurs="unbounded" />
+				<xs:element name="move" type="copytype" maxOccurs="unbounded" />
+				<xs:element name="mount" type="mounttype" maxOccurs="unbounded" />
+				<xs:element name="umount" type="mounttype" maxOccurs="unbounded" />
+				<xs:element name="process" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="startupcommand" type="xs:string"
+							use="required" />
+						<xs:attribute name="shutdowncommand" type="xs:string"
+							use="required" />
+						<xs:attribute name="processflag" type="xs:string"
+							use="required" />
+
+						<xs:attribute name="startup" type="xs:boolean"
+							default="true" />
+						<xs:attribute name="waitfor" type="xs:unsignedLong" />
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="existsprocess" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="processflag" type="xs:string"
+							use="required" />
+						<xs:attribute name="expected" type="xs:boolean"
+							default="true" />
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="availablehttpurl" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="url" type="xs:anyURI" use="required" />
+						<xs:attribute name="expected" type="xs:boolean"
+							default="true" />
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="copytype">
+		<xs:attribute name="src" type="xs:string" use="required" />
+		<xs:attribute name="dest" type="xs:string" use="required" />
+		<xs:all>
+			<xs:element name="excludes" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:all>
+						<xs:element name="exclude" type="xs:string" maxOccurs="unbounded" />
+					</xs:all>
+				</xs:complexType>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+
+
+	<xs:complexType name="mounttype">
+		<xs:attribute name="src" type="xs:string" use="required" />
+		<xs:attribute name="dest" type="xs:string" use="required" />
+	</xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<deploy>
+    <exec workdir="/home/dylan/Desktop/ads-test/dest/6.0.32">
+           <cmd><![CDATA[ls -l]]></cmd>
+           <rollback><![CDATA[ps -ef|grep java]]></rollback>
+    </exec>
+	<existsprocess processflag="org.apache.catalina.startup.Bootstrap" expected="true" />
+	<availablehttpurl url="http://localhost:8080/ads-test/test.html" expected="true" />
+	<process startupcommand="/home/dylan/Desktop/ads-test/dest/6.0.32/bin/startup.sh"
+		shutdowncommand="/home/dylan/Desktop/ads-test/dest/6.0.32/bin/shutdown.sh"
+		startup="false" processflag="org.apache.catalina.startup.Bootstrap"
+		waitfor="15" />
+	<move src="/home/dylan/Desktop/ads-test/dest/6.0.32/webapps/ads-test/test.html" dest="test.html.bak" />
+ 	<copy src="test.html" dest="/home/dylan/Desktop/ads-test/dest/6.0.32/webapps/ads-test/test.html" />
+	<process startupcommand="/home/dylan/Desktop/ads-test/dest/6.0.32/bin/startup.sh"
+		shutdowncommand="/home/dylan/Desktop/ads-test/dest/6.0.32/bin/shutdown.sh"
+		startup="true" processflag="org.apache.catalina.startup.Bootstrap"
+		waitfor="15" />
+	<existsprocess processFlag="org.apache.catalina.startup.Bootstrap" expected="true" />
+	<availablehttpurl url="http://localhost:8080/ads-test/test.html" expected="true" />
+</deploy>
